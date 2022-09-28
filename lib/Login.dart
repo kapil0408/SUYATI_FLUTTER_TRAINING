@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:suyati_flutter_training/main.dart';
+import 'Signup.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,6 +20,37 @@ class _LoginState extends State<Login> {
    String strEmailMessage = "";
    String strPasswordMessage = "";
 
+  String? checkEmail(String strEmail)
+  {
+     String tmpStrEmail = strEmail.trim();
+     if(tmpStrEmail.isEmpty){
+       return "Please enter email";
+     }
+     else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(tmpStrEmail))
+     {
+        return "Please enter correct email";
+     }
+     else
+     {
+       return null;
+     }
+  }
+
+  String? checkPassword(String strPassword)
+  {
+     String tmpStrPassword = strPassword.trim();
+     if(tmpStrPassword.isEmpty){
+       return "Please enter password";
+     }
+     else if(tmpStrPassword.length<6 && tmpStrPassword.length>10)
+     {
+        return "Please enter password between 6 to 10 characters";
+     }
+     else
+     {
+       return null;
+     }
+  }
 
   @override
   void initState() {
@@ -132,7 +164,7 @@ class _LoginState extends State<Login> {
             const SizedBox(height:20.0),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const SecondScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const Signup()));
               },
               child: const Text.rich(
                 TextSpan(
