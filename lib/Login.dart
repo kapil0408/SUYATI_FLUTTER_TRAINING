@@ -150,11 +150,18 @@ class _LoginState extends State<Login> {
                                 _isPasswordError = true;
                              });
                            }
-                           else if(password.text.length<6 && password.text.length>10){
+                           else if(password.text.length<6 && password.text.length<=10){
                              setState(() {
-                                strPasswordMessage = "Please enter password between 6 to 10 alphabets";
+                                strPasswordMessage = "Please enter password between 6 to 10 alphaets";
                                 _isPasswordError = true;
                              });
+                           }
+                           else
+                           {
+                               setState(() {
+                                 _isEmailError = false;
+                                _isPasswordError = false;
+                               });
                            }
                          }
                          ),
