@@ -4,16 +4,14 @@ import 'package:suyati_flutter_training/Login.dart';
 
 // import 'login.dart';
 
-void main(){
+void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget
-{
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Splash Screen',
       theme: ThemeData(
@@ -25,7 +23,6 @@ class MyApp extends StatelessWidget
   }
 }
 
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -35,24 +32,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
-      Timer(const Duration(seconds: 3),
-          () => Navigator.pushReplacement(context, 
-                                          MaterialPageRoute(builder:
-                                                            (context) => 
-                                                            const Login()
-                                                          )
-                                                        )
-                                                      );
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Login())));
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      child: FlutterLogo(size: MediaQuery.of(context).size.height)
-    );
+        color: Colors.white,
+        child: FlutterLogo(size: MediaQuery.of(context).size.height));
   }
 }
 
@@ -64,7 +56,10 @@ class SecondScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("GeeksForGeeks")),
       body: const Center(
-        child: Text("Home page", textScaleFactor: 2,),
+        child: Text(
+          "Home page",
+          textScaleFactor: 2,
+        ),
       ),
     );
   }
