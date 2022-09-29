@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'Signup.dart';
 
@@ -18,26 +20,31 @@ class _LoginState extends State<Login> {
   String strEmailMessage = "";
   String strPasswordMessage = "";
 
-  String? checkEmail(String strEmail) {
-    String tmpStrEmail = strEmail.trim();
-    if (tmpStrEmail.isEmpty) {
-      return "Please enter email";
-    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-        .hasMatch(tmpStrEmail)) {
-      return "Please enter correct email";
-    } else {
-      return null;
+
+  bool isEmptyString(String strtmp) 
+  {
+    if (strtmp.isEmpty) {
+      return true;
+    }else{
+      return false;
     }
   }
 
-  String? checkPassword(String strPassword) {
-    String tmpStrPassword = strPassword.trim();
-    if (tmpStrPassword.isEmpty) {
-      return "Please enter password";
-    } else if (tmpStrPassword.length < 6 && tmpStrPassword.length > 10) {
-      return "Please enter password between 6 to 10 characters";
+  bool validateEmail(String strEmail) {
+   if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(strEmail.trim())) {
+      return true;
     } else {
-      return null;
+      return false;
+    }
+  }
+
+  bool validatePasswordLength(String strPassword) {
+     if (strPassword.trim().length < 6) {
+      return true;
+    } else if (strPassword.trim().length > 10){
+      return true;
+    }else {
+      return false;
     }
   }
 
@@ -107,9 +114,7 @@ class _LoginState extends State<Login> {
                     controller: password,
                     decoration: InputDecoration(
                       hintText: 'Password',
-                      errorText: _isPasswordError
-                          ? strPasswordMessage
-                          : null,
+                      errorText: _isPasswordError? strPasswordMessage: null,
                       suffixIcon: InkWell(
                           onTap: _ClickPasswordView,
                           child: Icon(
@@ -143,24 +148,25 @@ class _LoginState extends State<Login> {
                       ),
                       color: const Color(0xffEE7B23),
                       onPressed: () {
-                        if (email.text.isEmpty) {
+                        if(isEmptyString(email.text))
+                        {
+                            setState(() {
+                              strEmailMessage = "Please enter email";
+                            _isEmailError = true;
+                            });
+                        }
+                        else if (validateEmail(email.text)) {
                           setState(() {
-                            strEmailMessage = "Please enter email";
+                            strEmailMessage = "Please enter correct email";
                             _isEmailError = true;
                           });
-                        } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                            .hasMatch(email.text)) {
-                          setState(() {
-                            strEmailMessage = "Please enter correct mail";
-                            _isEmailError = true;
-                          });
-                        } else if (password.text.isEmpty) {
+                        } 
+                        else if (isEmptyString(password.text)) {
                           setState(() {
                             strPasswordMessage = "Please enter password";
                             _isPasswordError = true;
                           });
-                        } else if (password.text.length < 6 &&
-                            password.text.length <= 10) {
+                        } else if (validatePasswordLength(password.text)) {
                           setState(() {
                             strPasswordMessage =
                                 "Please enter password between 6 to 10 alphaets";
