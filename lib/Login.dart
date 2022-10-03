@@ -1,7 +1,10 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:suyati_flutter_training/constant.dart';
 import 'Signup.dart';
+import 'Validator.dart';
+import 'ForgetPassword.dart';
+
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,34 +22,6 @@ class _LoginState extends State<Login> {
   bool _isPasswordError = false;
   String strEmailMessage = "";
   String strPasswordMessage = "";
-
-
-  bool isEmptyString(String strtmp) 
-  {
-    if (strtmp.isEmpty) {
-      return true;
-    }else{
-      return false;
-    }
-  }
-
-  bool validateEmail(String strEmail) {
-   if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(strEmail.trim())) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool validatePasswordLength(String strPassword) {
-     if (strPassword.trim().length < 6) {
-      return true;
-    } else if (strPassword.trim().length > 10){
-      return true;
-    }else {
-      return false;
-    }
-  }
 
   @override
   void initState() {
@@ -114,7 +89,7 @@ class _LoginState extends State<Login> {
                     controller: password,
                     decoration: InputDecoration(
                       hintText: 'Password',
-                      errorText: _isPasswordError? strPasswordMessage: null,
+                      errorText: _isPasswordError ? strPasswordMessage : null,
                       suffixIcon: InkWell(
                           onTap: _ClickPasswordView,
                           child: Icon(
@@ -136,10 +111,48 @@ class _LoginState extends State<Login> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Forget password?',
-                    style: TextStyle(fontSize: 20.0),
+                  InkWell(
+                    child: const Text(
+                      'Forget password?',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    onTap: () {
+                      var emailController = TextEditingController();
+
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const Dialog(child: ForgetPassword());
+                            // return AlertDialog(
+                            //   title: const Text('Forget Password'),
+                            //   content: Column(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     children: [
+                            //       TextFormField(
+                            //         controller: emailController,
+                            //         decoration: const InputDecoration(
+                            //             hintText: "Email"),
+                            //       )
+                            //     ],
+                            //   ),
+                            //   actions: [
+                            //     TextButton(
+                            //       onPressed: () => Navigator.pop(context),
+                            //       child: const Text('Cancel'),
+                            //     ),
+                            //     TextButton(
+                            //       onPressed: () {
+                            //         var email = emailController.text;
+                            //         Navigator.pop(context);
+                            //       },
+                            //       child: const Text('Send'),
+                            //     )
+                            //   ],
+                            // );
+                          });
+                    },
                   ),
+
                   // ignore: deprecated_member_use
                   RaisedButton(
                       child: const Text(
@@ -148,28 +161,26 @@ class _LoginState extends State<Login> {
                       ),
                       color: const Color(0xffEE7B23),
                       onPressed: () {
-                        if(isEmptyString(email.text))
-                        {
-                            setState(() {
-                              strEmailMessage = "Please enter email";
-                            _isEmailError = true;
-                            });
-                        }
-                        else if (validateEmail(email.text)) {
+                        if (Validator.isEmptyString(email.text)) {
                           setState(() {
-                            strEmailMessage = "Please enter correct email";
+                            strEmailMessage = Constants.checkEmptyEmail;
                             _isEmailError = true;
                           });
-                        } 
-                        else if (isEmptyString(password.text)) {
+                        } else if (Validator.validateEmail(email.text)) {
                           setState(() {
-                            strPasswordMessage = "Please enter password";
+                            strEmailMessage = Constants.checkPasswordLength;
+                            _isEmailError = true;
+                          });
+                        } else if (Validator.isEmptyString(password.text)) {
+                          setState(() {
+                            strPasswordMessage = Constants.checkEmptyPassword;
                             _isPasswordError = true;
                           });
-                        } else if (validatePasswordLength(password.text)) {
+                        } else if (Validator.validatePasswordLength(
+                            password.text)) {
                           setState(() {
                             strPasswordMessage =
-                                "Please enter password between 6 to 10 alphaets";
+                                Constants.checkPasswordLength;
                             _isPasswordError = true;
                           });
                         } else {
