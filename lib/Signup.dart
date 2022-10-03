@@ -19,8 +19,16 @@ class _SignupState extends State<Signup> {
           child: Form(
             key: formKey, //key for form
             child: Column(children: [
+              const SizedBox(
+                    height: 20.0,
+                  ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Enter Name'),
+                decoration:  InputDecoration(
+                  hintText: "Username",
+                  suffixIcon: const Icon(Icons.email),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                  ),
                 validator: (value) {
                   if (value!.isEmpty ||
                       !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
@@ -31,9 +39,17 @@ class _SignupState extends State<Signup> {
                   }
                 },
               ),
+
+              const SizedBox(
+                    height: 20.0,
+                  ),
+
               TextFormField(
-                decoration:
-                    const InputDecoration(labelText: 'Enter Phone Number'),
+                decoration: InputDecoration(
+                  hintText: "Email",
+                  suffixIcon: const Icon(Icons.email),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty ||
                       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
@@ -45,8 +61,17 @@ class _SignupState extends State<Signup> {
                   }
                 },
               ),
+
+              const SizedBox(
+                    height: 20.0,
+                  ),
+
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Enter Email'),
+                decoration: InputDecoration(
+                  hintText: "Phone number",
+                  suffixIcon: const Icon(Icons.phone),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty ||
                       !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
@@ -58,6 +83,55 @@ class _SignupState extends State<Signup> {
                   }
                 },
               ),
+
+              const SizedBox(
+                    height: 20.0,
+                  ),
+
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Password",
+                  suffixIcon: const Icon(Icons.visibility_off),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty ||
+                      !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                    //r'^[0-9]{10}$' pattern plain match number with length 10
+                    return "Enter Correct Email Address";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+
+              const SizedBox(
+                    height: 20.0,
+                  ),
+
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Confirm Password",
+                  suffixIcon: const Icon(Icons.visibility_off),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty ||
+                      !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                    //r'^[0-9]{10}$' pattern plain match number with length 10
+                    return "Enter Correct Email Address";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+
+              const SizedBox(
+                    height: 20.0,
+                  ),
+
               ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
