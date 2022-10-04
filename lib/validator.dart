@@ -26,4 +26,12 @@ class Validator
       return false;
     }
   }
+
+   static bool passwordMatch(String strPassword, String strConfirmPassword) {
+     if (strPassword.trim() !=  strConfirmPassword.trim()) {
+      return true;
+    }else {
+      return false;
+    }
+  }
 }

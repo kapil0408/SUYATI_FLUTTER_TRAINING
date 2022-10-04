@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:suyati_flutter_training/validator.dart';
+import 'constant.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -8,6 +10,10 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+  
   final formKey = GlobalKey<FormState>(); //Key for Form
 
   @override
@@ -33,7 +39,7 @@ class _SignupState extends State<Signup> {
                     fit: BoxFit.fill,
                   ),
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 TextFormField(
@@ -44,10 +50,8 @@ class _SignupState extends State<Signup> {
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      //allow upper and lower case alphabets and space
-                      return "Enter Correct Name";
+                    if (Validator.isEmptyString(value!)) {
+                      return Constants.checkEmptyUsername;
                     } else {
                       return null;
                     }
@@ -64,11 +68,10 @@ class _SignupState extends State<Signup> {
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
-                            .hasMatch(value)) {
-                      //r'^[0-9]{10}$' pattern plain match number with length 10
-                      return "Enter Correct Phone Number";
+                    if (Validator.isEmptyString(value!)) {
+                      return Constants.checkEmptyEmail;
+                    } else if (Validator.validateEmail(value)) {
+                      return Constants.checkValidEmail;
                     } else {
                       return null;
                     }
@@ -85,11 +88,8 @@ class _SignupState extends State<Signup> {
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                            .hasMatch(value)) {
-                      //r'^[0-9]{10}$' pattern plain match number with length 10
-                      return "Enter Correct Email Address";
+                    if (Validator.isEmptyString(value!)) {
+                      return Constants.checkEmptyPhoneNumber;
                     } else {
                       return null;
                     }
@@ -99,6 +99,7 @@ class _SignupState extends State<Signup> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: password,
                   decoration: InputDecoration(
                     hintText: "Password",
                     suffixIcon: const Icon(Icons.visibility_off),
@@ -106,11 +107,10 @@ class _SignupState extends State<Signup> {
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                            .hasMatch(value)) {
-                      //r'^[0-9]{10}$' pattern plain match number with length 10
-                      return "Enter Correct Email Address";
+                    if (Validator.isEmptyString(value!)) {
+                      return Constants.checkPasswordLength;
+                    } else if (Validator.validatePasswordLength(value)) {
+                      return Constants.checkEmptyPassword;
                     } else {
                       return null;
                     }
@@ -120,6 +120,7 @@ class _SignupState extends State<Signup> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: confirmPassword,
                   decoration: InputDecoration(
                     hintText: "Confirm Password",
                     suffixIcon: const Icon(Icons.visibility_off),
@@ -127,12 +128,13 @@ class _SignupState extends State<Signup> {
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                            .hasMatch(value)) {
-                      //r'^[0-9]{10}$' pattern plain match number with length 10
-                      return "Enter Correct Email Address";
-                    } else {
+                    if (Validator.isEmptyString(value!)) {
+                      return Constants.checkEmptyConfirmPassword;
+                    }
+                     else if (Validator.passwordMatch(password.text, confirmPassword.text)){
+                      return Constants.passwordDoesNotMatch;
+                    }
+                    else {
                       return null;
                     }
                   },
