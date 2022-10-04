@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:suyati_flutter_training/validator.dart';
 import 'constant.dart';
@@ -108,9 +110,9 @@ class _SignupState extends State<Signup> {
                   ),
                   validator: (value) {
                     if (Validator.isEmptyString(value!)) {
-                      return Constants.checkPasswordLength;
-                    } else if (Validator.validatePasswordLength(value)) {
                       return Constants.checkEmptyPassword;
+                    } else if (Validator.validatePasswordLength(value)) {
+                      return Constants.checkPasswordLength;
                     } else {
                       return null;
                     }
@@ -147,6 +149,12 @@ class _SignupState extends State<Signup> {
                       if (formKey.currentState!.validate()) {
                         //Check if form data are valid
                         // your process task ahead if all data are valid
+                        print("successful");
+                        return;
+                      }
+                      else
+                      {
+                        print("unsuccessful");
                       }
                     },
                     child: const Text("Sign up"))
