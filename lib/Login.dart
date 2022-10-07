@@ -93,7 +93,7 @@ class _LoginState extends State<Login> {
                       suffixIcon: InkWell(
                           onTap: _ClickPasswordView,
                           child: Icon(
-                            _isHidden ? Icons.visibility : Icons.visibility_off,
+                            _isHidden ? Icons.visibility_off : Icons.visibility,
                           )),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),

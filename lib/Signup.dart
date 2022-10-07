@@ -12,10 +12,11 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
-  
+  bool _isPasswordHidden = true;
+  bool _isConfirmPasswordHidden = true;
+
   final formKey = GlobalKey<FormState>(); //Key for Form
 
   @override
@@ -102,9 +103,16 @@ class _SignupState extends State<Signup> {
                 ),
                 TextFormField(
                   controller: password,
+                  obscureText: _isPasswordHidden,
                   decoration: InputDecoration(
                     hintText: "Password",
-                    suffixIcon: const Icon(Icons.visibility_off),
+                    suffixIcon: InkWell(
+                        onTap: _ClickPasswordView,
+                        child: Icon(
+                          _isPasswordHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        )),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
@@ -123,20 +131,26 @@ class _SignupState extends State<Signup> {
                 ),
                 TextFormField(
                   controller: confirmPassword,
+                  obscureText: _isConfirmPasswordHidden,
                   decoration: InputDecoration(
                     hintText: "Confirm Password",
-                    suffixIcon: const Icon(Icons.visibility_off),
+                    suffixIcon: InkWell(
+                        onTap: _ClickConfirmPasswordView,
+                        child: Icon(
+                          _isConfirmPasswordHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        )),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) {
                     if (Validator.isEmptyString(value!)) {
                       return Constants.checkEmptyConfirmPassword;
-                    }
-                     else if (Validator.passwordMatch(password.text, confirmPassword.text)){
+                    } else if (Validator.passwordMatch(
+                        password.text, confirmPassword.text)) {
                       return Constants.passwordDoesNotMatch;
-                    }
-                    else {
+                    } else {
                       return null;
                     }
                   },
@@ -151,9 +165,7 @@ class _SignupState extends State<Signup> {
                         // your process task ahead if all data are valid
                         print("successful");
                         return;
-                      }
-                      else
-                      {
+                      } else {
                         print("unsuccessful");
                       }
                     },
@@ -162,5 +174,17 @@ class _SignupState extends State<Signup> {
             ),
           ),
         ));
+  }
+
+  void _ClickPasswordView() {
+    setState(() {
+      _isPasswordHidden = !_isPasswordHidden;
+    });
+  }
+
+  void _ClickConfirmPasswordView() {
+    setState(() {
+      _isConfirmPasswordHidden = !_isConfirmPasswordHidden;
+    });
   }
 }
