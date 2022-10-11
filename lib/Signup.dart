@@ -107,7 +107,7 @@ class _SignupState extends State<Signup> {
                   decoration: InputDecoration(
                     hintText: "Password",
                     suffixIcon: InkWell(
-                        onTap: _ClickPasswordView,
+                        onTap: _clickPasswordView,
                         child: Icon(
                           _isPasswordHidden
                               ? Icons.visibility_off
@@ -135,7 +135,7 @@ class _SignupState extends State<Signup> {
                   decoration: InputDecoration(
                     hintText: "Confirm Password",
                     suffixIcon: InkWell(
-                        onTap: _ClickConfirmPasswordView,
+                        onTap: _clickConfirmPasswordView,
                         child: Icon(
                           _isConfirmPasswordHidden
                               ? Icons.visibility_off
@@ -176,13 +176,13 @@ class _SignupState extends State<Signup> {
         ));
   }
 
-  void _ClickPasswordView() {
+  void _clickPasswordView() {
     setState(() {
       _isPasswordHidden = !_isPasswordHidden;
     });
   }
 
-  void _ClickConfirmPasswordView() {
+  void _clickConfirmPasswordView() {
     setState(() {
       _isConfirmPasswordHidden = !_isConfirmPasswordHidden;
     });

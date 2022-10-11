@@ -9,4 +9,6 @@ class Constants
    static const String checkPasswordLength = "Please enter password between 6 to 10 alphaets";
    static const String passwordDoesNotMatch = "Password does not match";
 
+   static const String baseUrl = "https://gillig-dw-qa.herokuapp.com/";
 }
+

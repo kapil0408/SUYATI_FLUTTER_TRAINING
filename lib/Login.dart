@@ -1,10 +1,13 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:suyati_flutter_training/constant.dart';
 import 'Signup.dart';
 import 'Validator.dart';
-import 'ForgetPassword.dart';
-
+import 'forgetpassword.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -27,6 +30,9 @@ class _LoginState extends State<Login> {
   void initState() {
     email.text = "";
     password.text = "";
+    var dataEncode = utf8.encode('Kapil:goyal');
+    var enctest =  base64Encode(dataEncode);
+    log("this is base 64 $enctest");
     super.initState();
   }
 
@@ -91,7 +97,7 @@ class _LoginState extends State<Login> {
                       hintText: 'Password',
                       errorText: _isPasswordError ? strPasswordMessage : null,
                       suffixIcon: InkWell(
-                          onTap: _ClickPasswordView,
+                          onTap: _clickPasswordView,
                           child: Icon(
                             _isHidden ? Icons.visibility_off : Icons.visibility,
                           )),
@@ -117,8 +123,6 @@ class _LoginState extends State<Login> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                     onTap: () {
-                      var emailController = TextEditingController();
-
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -179,8 +183,7 @@ class _LoginState extends State<Login> {
                         } else if (Validator.validatePasswordLength(
                             password.text)) {
                           setState(() {
-                            strPasswordMessage =
-                                Constants.checkPasswordLength;
+                            strPasswordMessage = Constants.checkPasswordLength;
                             _isPasswordError = true;
                           });
                         } else {
@@ -214,9 +217,23 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void _ClickPasswordView() {
+  void _clickPasswordView() {
     setState(() {
       _isHidden = !_isHidden;
     });
   }
+
+  // Future<http.Response> loginApi(String username, String password) {
+  //   return http.post(
+  //     Uri.parse(Constants.baseUrl + 'api/login'),
+  //     headers: <String, String>{
+        
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+      
+  //     body: jsonEncode(<String, String>{
+  //       'title': title,
+  //     }),
+  //   );
+  // }
 }
