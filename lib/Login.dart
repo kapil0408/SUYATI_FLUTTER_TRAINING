@@ -30,9 +30,11 @@ class _LoginState extends State<Login> {
   void initState() {
     email.text = "";
     password.text = "";
-    var dataEncode = utf8.encode('Kapil:goyal');
+
+    var dataEncode = utf8.encode('22222:1234');
     var enctest =  base64Encode(dataEncode);
-    log("this is base 64 $enctest");
+    log(enctest.toString());
+
     super.initState();
   }
 
